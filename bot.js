@@ -74,7 +74,7 @@ bot.on('message', msg => {
     	ScriptArray = SliceMessage(BeeScript);
     	SendMessages(ScriptArray,msg);
     }
-    else if (msg.content === 'shrek'){
+    else if (msg.content.includes('shrek')){
     	ScriptArray = SliceMessage(ShrekScript);
     	SendMessages(ScriptArray,msg);
     } 
