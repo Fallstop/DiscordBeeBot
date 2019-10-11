@@ -40,7 +40,13 @@ function SliceMessage(Text) {
 	NumberOfSlices = Math.ceil(Text/x);
 	while (i < NumberOfSlices - 1){
 		SliceSection = Text.slice(i*x,x*(i+1));
-		SliceMessages.push(SliceSection);
+		if (SliceMessages <= 2000 ){
+			SliceMessages.push(SliceSection);
+		}
+		else {
+			logger.info('Over Limmit');
+			logger.info(SliceSection.length);
+		}
 		i += 1;
 	}
 	SliceSection = Text.slice(i*x,Text.length);
@@ -64,7 +70,7 @@ bot.on('message', msg => {
     	ScriptArray = SliceMessage(BeeScript);
     	SendMessages(ScriptArray,msg);
     }
-    else if (message === 'shrek'){
+    else if (msg.content === 'shrek'){
     	ScriptArray = SliceMessage(ShrekScript);
     	SendMessages(ScriptArray,msg);
     } 
