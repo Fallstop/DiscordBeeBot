@@ -28,9 +28,6 @@ bot.on('ready', function (evt) {
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id 		+ ')');
 });
-
-bot.connect();
-
 //FUNCTIONS
 
 function SliceMessage(Text) {
