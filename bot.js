@@ -32,7 +32,7 @@ function SliceMessage(Text) {
 	var NumberOfSlices = 0;
 	var i = 0;
 	var x = 2000; //Charcter Limit 
-	NumberOfSlices = Math.ceil(Text/x;
+	NumberOfSlices = Math.ceil(Text/x);
 	while (i < NumberOfSlices - 1){
 		SliceSection = Text.slice(i*x,x*(i+1));
 		SliceMessages.push(SliceSection);
