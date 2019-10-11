@@ -59,6 +59,7 @@ function SendMessages(Array) {
 //MAIN CODE
 
 bot.on('message', function (user, userID, channelID, message, evt) {
+	logger.info('Bot On');
     if (message == 'bee') {
     	ScriptArray = SliceMessage(BeeScript);
     	SendMessages(ScriptArray);
@@ -69,3 +70,4 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     } 
 
 });
+logger.info('Bot ready');
