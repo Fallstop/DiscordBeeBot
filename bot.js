@@ -17,12 +17,13 @@ var bot = new Discord.Client({
    token: auth.token,
    autorun: true
 });
+logger.info('Discord Client Loaded');
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
-
+logger.info('Bot Connected');
 //FUNCTIONS
 
 function SliceMessage(Text) {
