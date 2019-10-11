@@ -70,4 +70,4 @@ bot.on('message', msg => {
     } 
 
 });
-client.login(auth.token);
+bot.login(auth.token);
