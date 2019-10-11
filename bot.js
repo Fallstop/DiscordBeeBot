@@ -40,7 +40,8 @@ function SliceMessage(Text) {
 	NumberOfSlices = Math.ceil(Text/x);
 	while (i < NumberOfSlices - 1){
 		SliceSection = Text.slice(i*x,x*(i+1));
-		if (SliceMessages <= 2000 ){
+		if (SliceSection.length <= 2000 ){
+			logger.info(SliceSection.length);
 			SliceMessages.push(SliceSection);
 		}
 		else {
