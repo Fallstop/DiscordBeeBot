@@ -14,16 +14,18 @@ logger.add(new logger.transports.Console, {
 logger.level = 'debug';
 // Initialize Discord Bot
 var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
+   token: auth.token
 });
+
 logger.info('Discord Client Loaded');
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
+    logger.info(bot.username + ' - (' + bot.id 		+ ')');
 });
-logger.info('Bot Connected');
+
+bot.connect();
+
 //FUNCTIONS
 
 function SliceMessage(Text) {
@@ -70,4 +72,3 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     } 
 
 });
-logger.info('Bot ready');
