@@ -38,6 +38,7 @@ function SliceMessage(Text) {
 	var i = 0;
 	var x = 2000; //Charcter Limit 
 	NumberOfSlices = Math.ceil(Text/x);
+	console.log(NumberOfSlices);
 	while (i < NumberOfSlices - 1){
 		SliceSection = Text.slice(i*x,x*(i+1));
 
