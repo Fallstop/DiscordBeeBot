@@ -42,13 +42,13 @@ function SliceMessage(Text) {
 	while (i < NumberOfSlices - 1){
 		SliceSection = Text.slice(i*x,x*(i+1));
 
-		if (SliceSection.length() <= 2000 ){
-			console.log(SliceSection.length());
+		if (SliceSection.length <= 2000 ){
+			console.log(SliceSection.length;
 			SliceMessages.push(SliceSection);
 		}
 		else {
 			console.log('Over Limmit');
-			console.log(SliceSection.length();
+			console.log(SliceSection.length;
 		}
 		i += 1;
 	}
