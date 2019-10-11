@@ -1,4 +1,4 @@
-var Discord = require('discord.io');
+var Discord = require('discord.js');
 var logger = require('winston');
 var auth = require('./auth.json');
 var fs = require('fs');
@@ -13,9 +13,7 @@ logger.add(new logger.transports.Console, {
 });
 logger.level = 'debug';
 // Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token
-});
+const bot = new Discord.Client();
 
 logger.info('Discord Client Loaded');
 bot.on('debug', (e) => {
@@ -53,13 +51,10 @@ function SliceMessage(Text) {
 
 	return(SliceMessages);
 }
-function SendMessages(Array) {
+function SendMessages(Array,msg) {
 	var i = 0;
     while(i < Array.length){
-   		bot.sendMessage({
-        	to: channelID,
-        	message: Array[i]
-    	});
+   		msg.channel.send(Array[i]);
    		i+= 1;
    		delay(200);
     }
@@ -67,15 +62,15 @@ function SendMessages(Array) {
 
 //MAIN CODE
 
-bot.on('message', function (user, userID, channelID, message, evt) {
-	logger.info('Bot On');
-    if (message == 'bee') {
+bot.on('message', msg => {
+    if (msg.content === 'bee') {
     	ScriptArray = SliceMessage(BeeScript);
-    	SendMessages(ScriptArray);
+    	SendMessages(ScriptArray,msg);
     }
-    else if (message == 'shrek'){
+    else if (message === 'shrek'){
     	ScriptArray = SliceMessage(ShrekScript);
-    	SendMessages(ScriptArray);
+    	SendMessages(ScriptArray,msg);
     } 
 
 });
+client.login(auth.token);
