@@ -1,0 +1,12 @@
+{
+  "name": "bee-bot",
+  "version": "1.0.0",
+  "description": "According to all known laws of aviation, there is no way a bee should be able to fly.",
+  "main": "bot.js",
+  "author": "Barry",
+  "dependencies": {
+    "delay": "^4.3.0",
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "winston": "^3.2.1"
+  }
+}
