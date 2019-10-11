@@ -18,6 +18,13 @@ var bot = new Discord.Client({
 });
 
 logger.info('Discord Client Loaded');
+bot.on('debug' (e) => {
+	logger.info(e);
+})
+bot.on('error' (e) => {
+	logger.info(e);
+})
+
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
