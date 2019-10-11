@@ -40,13 +40,14 @@ function SliceMessage(Text) {
 	NumberOfSlices = Math.ceil(Text/x);
 	while (i < NumberOfSlices - 1){
 		SliceSection = Text.slice(i*x,x*(i+1));
+
 		if (SliceSection.length <= 2000 ){
-			logger.info(SliceSection.length);
+			console.log(SliceSection.length);
 			SliceMessages.push(SliceSection);
 		}
 		else {
-			logger.info('Over Limmit');
-			logger.info(SliceSection.length);
+			console.log('Over Limmit');
+			console.log(SliceSection.length);
 		}
 		i += 1;
 	}
@@ -58,8 +59,8 @@ function SliceMessage(Text) {
 function SendMessages(Array,msg) {
 	var i = 0;
     while(i < Array.length){
-    	console.log('hello world');
-   		msg.channel.send(Array.length);
+    	console.log('Sending A Message');
+   		msg.channel.send(Array[i].length);
    		i+= 1;
    		delay(200);
     }
