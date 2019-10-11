@@ -61,7 +61,7 @@ function SendMessages(Array,msg) {
 	var i = 0;
     while(i < Array.length){
     	console.log('Sending A Message');
-   		msg.channel.send(Array[i].length);
+   		msg.channel.send(Array[i]);
    		i+= 1;
    		delay(200);
     }
