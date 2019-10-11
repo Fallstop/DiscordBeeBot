@@ -58,7 +58,7 @@ function SliceMessage(Text) {
 function SendMessages(Array,msg) {
 	var i = 0;
     while(i < Array.length){
-   		msg.channel.send("BEEEEEEE");
+   		msg.channel.send(Array.length);
    		i+= 1;
    		delay(200);
     }
