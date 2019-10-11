@@ -3,7 +3,7 @@ var logger = require('winston');
 var auth = require('./auth.json');
 var fs = require('fs');
 var BeeScript = fs.readFileSync('BeeMovieScript.txt', 'utf8');
-var ShrekScript = fs.readFileSync('ShrekScript.txt', 'utf8');
+var ShrekScript = fs.readFileSync('ShrekMovieScript.txt', 'utf8');
 const delay = require('delay');
 logger.info('Loaded Bee movie script');
 // Configure logger settings
