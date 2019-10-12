@@ -101,7 +101,7 @@ function printDocTitle(auth) {
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
-    console.log(`The body of the document is: ${res.data.head}`);
+    console.log(`The body of the document is: ${res.data.title}`);
   });
 }
 
@@ -164,18 +164,19 @@ function SendMessages(Array,msg) {
 //MAIN CODE
 
 bot.on('message', msg => {
-    if (msg.content === 'bee') {
-    	ScriptArray = SliceMessage(BeeScript);
-    	SendMessages(ScriptArray,msg);
-    }
-    else if (msg.content.includes('shrek')){
-    	ScriptArray = SliceMessage(ShrekScript);
-    	SendMessages(ScriptArray,msg);
-    }
-    else if (msg.content == "noob"){
-    	ScriptArray = SliceMessage(NavyPasta);
-    	SendMessages(ScriptArray,msg);
-    } 
-
+	if (msg.channel.name == 'the-sacred-texts') {
+	    if (msg.content == 'bee') {
+	    	ScriptArray = SliceMessage(BeeScript);
+	    	SendMessages(ScriptArray,msg);
+	    }
+	    else if (msg.content.includes('shrek')){
+	    	ScriptArray = SliceMessage(ShrekScript);
+	    	SendMessages(ScriptArray,msg);
+	    }
+	    else if (msg.content == "noob"){
+	    	ScriptArray = SliceMessage(NavyPasta);
+	    	SendMessages(ScriptArray,msg);
+	    } 
+	}
 });
 bot.login(auth.token);
