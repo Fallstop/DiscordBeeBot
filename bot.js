@@ -164,7 +164,7 @@ function SendMessages(Array,msg) {
 //MAIN CODE
 
 bot.on('message', msg => {
-	if (msg.channel.name == 'the-sacered-texts' && msg.author != 'Fallstop#3106') {
+	if (msg.channel.name == 'the-sacered-texts' && msg.author.username != 'CJ2005') {
 	    if (msg.content == 'bee') {
 	    	ScriptArray = SliceMessage(BeeScript);
 	    	SendMessages(ScriptArray,msg);
@@ -180,7 +180,7 @@ bot.on('message', msg => {
 	    else if (msg.content == "yes"){
 	    	console.log("Message Author");
 	    	console.log(msg.author.username);
-	    	SendMessages(["no, Message Author:",msg.author],msg);
+	    	SendMessages(["no, Message Author:",msg.author.username],msg);
 	    }
 	}
 });
