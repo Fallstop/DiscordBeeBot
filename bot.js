@@ -98,7 +98,7 @@ function getNewToken(oAuth2Client, callback) {
 function printDocTitle(auth) {
   const docs = google.docs({version: 'v1', auth});
   docs.documents.get({
-    documentId: '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE',
+    documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     console.log(`The title of the document is: ${res.data.title}`);
