@@ -4,6 +4,7 @@ var auth = require('./auth.json');
 var fs = require('fs');
 var BeeScript = fs.readFileSync('BeeMovieScript.txt', 'utf8');
 var ShrekScript = fs.readFileSync('ShrekMovieScript.txt', 'utf8');
+var NavyPasta = fs.readFileSync('NavySeilCopyPasta.txt', 'utf8');
 const delay = require('delay');
 logger.info('Loaded Bee movie script');
 // Configure logger settings
@@ -76,6 +77,10 @@ bot.on('message', msg => {
     }
     else if (msg.content.includes('shrek')){
     	ScriptArray = SliceMessage(ShrekScript);
+    	SendMessages(ScriptArray,msg);
+    }
+    else if (msg.content == "noob"){
+    	ScriptArray = SliceMessage(NavyPasta);
     	SendMessages(ScriptArray,msg);
     } 
 
