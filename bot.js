@@ -101,7 +101,7 @@ function printDocTitle(auth) {
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
-    console.log(`The body of the document is: ${res.data.title}`);
+    console.log(`The body of the document is: ${res.data.body}`);
   });
 }
 
