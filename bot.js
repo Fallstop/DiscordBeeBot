@@ -90,6 +90,7 @@ function GetDocBody(auth,msg) {
     ScriptArray = SliceMessage(NavyPasta);
 	SendMessages(ScriptArray,msg);
     Body = res.data.body.content[1].paragraph.elements[0].textRun.content;
+    console.log(Body);
     ScriptArray = SliceMessage(Body);
 	SendMessages(ScriptArray,msg);
   });
