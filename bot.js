@@ -156,24 +156,24 @@ function SendMessages(Array,msg) {
 
 bot.on('message', msg => {
 	if (msg.channel.name == 'the-sacered-texts' && msg.author.username != 'CJ2005') {
-	    if (msg.content == 'bee') {
+	    if (msg.content.toLowerCase() == 'bee') {
 	    	ScriptArray = SliceMessage(BeeScript);
 	    	SendMessages(ScriptArray,msg);
 	    }
-	    else if (msg.content.includes('shrek')){
+	    else if (msg.content.toLowerCase().includes('shrek')){
 	    	ScriptArray = SliceMessage(ShrekScript);
 	    	SendMessages(ScriptArray,msg);
 	    }
-	    else if (msg.content == "noob"){
+	    else if (msg.content.toLowerCase() == "noob"){
 	    	ScriptArray = SliceMessage(NavyPasta);
 	    	SendMessages(ScriptArray,msg);
 	    } 
-	    else if (msg.content == "yes"){
+	    else if (msg.content.toLowerCase() == "yes"){
 	    	console.log("Message Author");
 	    	console.log(msg.author.username);
 	    	SendMessages(["no"],msg);
 	    }
-	    else if (msg.content == "print doc"){
+	    else if (msg.content.toLowerCase() == "print doc"){
 	    	GetDocBody(msg)
 	    	
 	    } 
