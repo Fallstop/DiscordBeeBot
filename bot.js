@@ -27,7 +27,7 @@ fs.readFile('credentials.json', (err, content) => {
   // Authorize a client with credentials, then call the Google Docs API.
   authorize(JSON.parse(content), printDocTitle);
 });
-
+const docs = google.docs({version: 'v1', auth});
 function authorize(credentials, callback) {
   const {client_secret, client_id, redirect_uris} = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
@@ -81,8 +81,7 @@ function printDocTitle(auth) {
     console.log("The body of the document is: %j", res.data.body.content[1].paragraph.elements[0].textRun.content);
   });
 }
-function GetDocBody(msg) {
-  const docs = google.docs({version: 'v1', auth});
+function GetDocBody(msg,docs) {
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
@@ -174,7 +173,7 @@ bot.on('message', msg => {
 	    	SendMessages(["no"],msg);
 	    }
 	    else if (msg.content.toLowerCase() == "print doc"){
-	    	GetDocBody(msg)
+	    	GetDocBody(msg,docs)
 	    	
 	    } 
 
