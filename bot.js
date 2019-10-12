@@ -164,7 +164,7 @@ function SendMessages(Array,msg) {
 //MAIN CODE
 
 bot.on('message', msg => {
-	if (msg.channel.name == 'the-sacred-texts') {
+	if (msg.channel.name == 'the-sacered-texts') {
 	    if (msg.content == 'bee') {
 	    	ScriptArray = SliceMessage(BeeScript);
 	    	SendMessages(ScriptArray,msg);
