@@ -81,7 +81,19 @@ function printDocTitle(auth) {
     console.log("The body of the document is: %j", res.data.body.content[1].paragraph.elements[0].textRun.content);
   });
 }
-
+function GetDocBody(auth,msg) {
+  const docs = google.docs({version: 'v1', auth});
+  docs.documents.get({
+    documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
+  }, (err, res) => {
+    if (err) return console.log('The API returned an error: ' + err);
+    ScriptArray = SliceMessage(NavyPasta);
+	SendMessages(ScriptArray,msg);
+    Body = res.data.body.content[1].paragraph.elements[0].textRun.content;
+    ScriptArray = SliceMessage(Body);
+	SendMessages(ScriptArray,msg);
+  });
+}
 
 // Initialize Discord Bot
 const bot = new Discord.Client();
@@ -156,6 +168,18 @@ bot.on('message', msg => {
 	    	console.log(msg.author.username);
 	    	SendMessages(["no"],msg);
 	    }
+	    else if (msg.content == "print doc"){
+	    	fs.readFile('credentials.json', (err, content) => {
+  				if (err) return console.log('Error loading client secret file:', err);
+  				// Authorize a client with credentials, then call the Google Docs API.
+  				authorize(JSON.parse(content), GetDocBody(msg);
+			});
+	    	
+	    } 
+
+	    
+
+
 	}
 });
 bot.login(auth.token);
