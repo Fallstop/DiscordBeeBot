@@ -178,7 +178,7 @@ bot.on('message', msg => {
 	    	SendMessages(ScriptArray,msg);
 	    } 
 	    else if (msg.content == "yes"){
-	    	SendMessages(["no"],msg);
+	    	SendMessages(["no, Message Author:",msg.author],msg);
 	    }
 	}
 });
