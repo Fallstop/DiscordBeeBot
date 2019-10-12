@@ -177,6 +177,9 @@ bot.on('message', msg => {
 	    	ScriptArray = SliceMessage(NavyPasta);
 	    	SendMessages(ScriptArray,msg);
 	    } 
+	    else if (msg.content == "yes"){
+	    	SendMessages(["no"],msg);
+	    }
 	}
 });
 bot.login(auth.token);
