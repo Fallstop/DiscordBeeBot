@@ -180,7 +180,7 @@ bot.on('message', msg => {
 	    else if (msg.content == "yes"){
 	    	console.log("Message Author");
 	    	console.log(msg.author.username);
-	    	SendMessages(["no, Message Author:",msg.author.username],msg);
+	    	SendMessages(["no"],msg);
 	    }
 	}
 });
