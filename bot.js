@@ -81,7 +81,7 @@ function printDocTitle(auth) {
     console.log("The body of the document is: %j", res.data.body.content[1].paragraph.elements[0].textRun.content);
   });
 }
-function GetDocBody(auth,msg) {
+function GetDocBody(msg,auth) {
   const docs = google.docs({version: 'v1', auth});
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
@@ -177,7 +177,7 @@ bot.on('message', msg => {
 	    	fs.readFile('credentials.json', (err, content) => {
   				if (err) return console.log('Error loading client secret file:', err);
   				// Authorize a client with credentials, then call the Google Docs API.
-  				authorize(JSON.parse(content), GetDocBody(msg));
+  				authorize(JSON.parse(content), GetDocBody(msg);
 			});
 	    	
 	    } 
