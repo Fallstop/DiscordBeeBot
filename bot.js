@@ -172,7 +172,7 @@ bot.on('message', msg => {
 	    	fs.readFile('credentials.json', (err, content) => {
   				if (err) return console.log('Error loading client secret file:', err);
   				// Authorize a client with credentials, then call the Google Docs API.
-  				authorize(JSON.parse(content), GetDocBody(msg);
+  				authorize(JSON.parse(content), GetDocBody(msg));
 			});
 	    	
 	    } 
