@@ -178,7 +178,8 @@ bot.on('message', msg => {
 	    	SendMessages(ScriptArray,msg);
 	    } 
 	    else if (msg.content == "yes"){
-	    	console.log(msg.author)
+	    	console.log("Message Author");
+	    	console.log(msg.author.username);
 	    	SendMessages(["no, Message Author:",msg.author],msg);
 	    }
 	}
