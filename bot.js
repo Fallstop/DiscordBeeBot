@@ -85,7 +85,7 @@ function GetDocBody(msg,docs) {
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
-    if (err) return SendMessages(["Sorry Google docs api returned a error: ",err],msg);
+    if (err) return SendMessages(["Sorry Google docs api returned a error: " + err],msg);
   	Body = res.data.body.content[1].paragraph.elements[0].textRun.content;
     console.log(Body);
     ScriptArray = SliceMessage(Body);
