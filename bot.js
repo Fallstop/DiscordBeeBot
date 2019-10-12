@@ -25,7 +25,7 @@ const SCOPES = ['https://www.googleapis.com/auth/documents.readonly'];
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Docs API.
-  authorize(JSON.parse(content), printDocTitle);
+  authorize(JSON.parse(content));
 });
 
 function authorize(credentials, callback) {
@@ -65,43 +65,23 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-function getNewToken(oAuth2Client, callback) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error retrieving access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
-      });
-      callback(oAuth2Client);
-    });
-  });
-}
-
 /**
  * Prints the title of a sample doc:
  * https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth 2.0 client.
  */
-function printDocTitle(auth) {
+function GetDocData() {
+	fs.readFile('credentials.json', (err, content) => {
+	  if (err) return console.log('Error loading client secret file:', err);
+	  // Authorize a client with credentials, then call the Google Docs API.
+	  authorize(JSON.parse(content));
+	});
   const docs = google.docs({version: 'v1', auth});
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
-    console.log("The body of the document is: %j", res.data.body.content[1].paragraph.elements[0].textRun.content);
+    return(res.data.body.content[1].paragraph.elements[0].textRun.content); //WTF is this json structer
   });
 }
 
@@ -182,6 +162,10 @@ bot.on('message', msg => {
 	    	console.log(msg.author.username);
 	    	SendMessages(["no"],msg);
 	    }
+	    else if (msg.content == "PrintDoc"){
+	    	ScriptArray = SliceMessage(GetDocData());
+	    	SendMessages(ScriptArray,msg);
+	    } 
 	}
 });
 bot.login(auth.token);
