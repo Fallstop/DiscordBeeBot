@@ -81,12 +81,13 @@ function printDocTitle(auth) {
   });
 }
 function GetDocBody(msg,auth) {
-  const docs = google.docs({version: 'v1', auth});
+  const docs = google.docs({version: 'v3', auth});
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
-    if (err) return msg.channel.send("Sorry Google docs api returned a error: " + err);
+    if (err) msg.channel.send("Sorry Google docs api returned a error: " + err);
   	Body = res.data.body.content[1].paragraph.elements[0].textRun.content;
+    console.log("Google doc Body grabed");
     console.log(Body);
     ScriptArray = SliceMessage(Body);
 	SendMessages(ScriptArray,msg);
