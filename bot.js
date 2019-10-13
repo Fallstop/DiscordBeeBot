@@ -25,22 +25,22 @@ const SCOPES = ['https://www.googleapis.com/auth/documents.readonly'];
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Docs API.
-  authorize(JSON.parse(content), printDocTitle);
+  const auth = authorize(JSON.parse(content));
 });
 const docs = google.docs({version: 'v1', auth});
-function authorize(credentials, callback) {
+function authorize(credentials) {
   const {client_secret, client_id, redirect_uris} = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client, callback);
+    if (err) return getNewToken(oAuth2Client);
     oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
+    return(oAuth2Client);
   });
 }
-function getNewToken(oAuth2Client, callback) {
+function getNewToken(oAuth2Client) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
@@ -60,7 +60,7 @@ function getNewToken(oAuth2Client, callback) {
         if (err) console.error(err);
         console.log('Token stored to', TOKEN_PATH);
       });
-      callback(oAuth2Client);
+      return(oAuth2Client);
     });
   });
 }
@@ -81,7 +81,7 @@ function printDocTitle(auth) {
     console.log("The body of the document is: %j", res.data.body.content[1].paragraph.elements[0].textRun.content);
   });
 }
-function GetDocBody(msg,docs) {
+function GetDocBody(msg,docs,auth) {
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
@@ -176,7 +176,7 @@ bot.on('message', msg => {
 	    	SendMessages(["no"],msg);
 	    }
 	    else if (msg.content.toLowerCase() == "print doc"){
-	    	GetDocBody(msg,docs)
+	    	GetDocBody(msg,docs,auth)
 	    	
 	    } 
 
