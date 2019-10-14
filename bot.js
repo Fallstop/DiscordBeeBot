@@ -76,7 +76,7 @@ function printDocTitle(auth) {
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
+    if (err) console.log('The API returned an error: ' + err);
     console.log("The body of the document is: %j", res.data.body.content[1].paragraph.elements[0].textRun.content);
   });
 }
