@@ -81,7 +81,7 @@ function printDocTitle(auth) {
   });
 }
 function GetDocBody(msg,auth) {
-  const docs = google.docs({version: 'v3', auth});
+  const docs = google.docs({version: 'v1', auth});
   docs.documents.get({
     documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
   }, (err, res) => {
