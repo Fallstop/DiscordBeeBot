@@ -163,18 +163,19 @@ bot.on('message', msg => {
 	    	ScriptArray = SliceMessage(BeeScript);
 	    	SendMessages(ScriptArray,msg);
 	    }
-	    else if (msg.content.toLowerCase().includes('shrek')){
+	    else if (msg.content.toLowerCase() == "shrek"){
 	    	ScriptArray = SliceMessage(ShrekScript);
 	    	SendMessages(ScriptArray,msg);
 	    }
-	    else if (msg.content.toLowerCase() == "noob"){
+	    else if (msg.content.toLowerCase().includes("noob")){
 	    	ScriptArray = SliceMessage(NavyPasta);
 	    	SendMessages(ScriptArray,msg);
 	    } 
 	    else if (msg.content.toLowerCase() == "yes"){
-	    	console.log("Message Author");
+	    	console.log("Debug Statment");
+        console.log("Message Author:");
 	    	console.log(msg.author.username);
-	    	SendMessages(["no"],msg);
+	    	SendMessages(['sudo no --mesg '],msg);
 	    }
 	    else if (msg.content.toLowerCase() == "print doc"){
 	    	GetDocBody(msg,auth)
