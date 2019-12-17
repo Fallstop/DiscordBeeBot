@@ -175,7 +175,7 @@ bot.on('message', msg => {
 	    	console.log("Debug Statment");
         console.log("Message Author:");
 	    	console.log(msg.author.username);
-	    	SendMessages(['sudo no --mesg '],msg);
+	    	SendMessages(["Debug Satement Recived, Reponse(sudo no --mesg ```${msg.content}``` --author ````${msg.author.username})"],msg);
 	    }
 	    else if (msg.content.toLowerCase() == "print doc"){
 	    	GetDocBody(msg,auth)
