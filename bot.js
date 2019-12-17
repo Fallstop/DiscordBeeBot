@@ -178,7 +178,7 @@ bot.on('message', msg => {
         var DebugStatment = `Debug Satement Recived, Reponse(sudo no --mesg ${msg.content} --author ${msg.author.username})`
         msg.channel.send(DebugStatment);
         msg.channel.send("Full Message Details:");
-        msg.channel.send(msg.stringify());
+        msg.channel.send(JSON.stringify(msg));
 	    }
 	    else if (msg.content.toLowerCase() == "print doc"){
 	    	GetDocBody(msg,auth)
