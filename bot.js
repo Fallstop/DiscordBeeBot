@@ -1,5 +1,6 @@
 var Discord = require('discord.js');
 var logger = require('winston');
+var stringify = require('json-stringify-safe');
 var auth = require('./auth.json');
 var fs = require('fs');
 var BeeScript = fs.readFileSync('BeeMovieScript.txt', 'utf8');
@@ -178,7 +179,7 @@ bot.on('message', msg => {
         var DebugStatment = `Debug Satement Recived, Reponse(sudo no --mesg ${msg.content} --author ${msg.author.username})`
         msg.channel.send(DebugStatment);
         msg.channel.send("Full Message Details:");
-        msg.channel.send(JSON.stringify(msg));
+        msg.channel.send(stringify(msg));
 	    }
 	    else if (msg.content.toLowerCase() == "print doc"){
 	    	GetDocBody(msg,auth)
