@@ -174,6 +174,7 @@ bot.on('message', msg => {
 	    } 
 	    else if (msg.content.toLowerCase() == "yes"){
 	    	console.log("Debug Statment - Summury");
+        msg.channel.send("Debug Statment - Summary");
         console.log("Message Author:");
 	    	console.log(msg.author.username);
         var DebugStatment = `Debug Satement Recived, Reponse(sudo no --mesg ${msg.content} --author ${msg.author.username})`
