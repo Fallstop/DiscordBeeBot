@@ -173,7 +173,7 @@ bot.on('message', msg => {
 	    	SendMessages(ScriptArray,msg);
 	    } 
 	    else if (msg.content.toLowerCase() == "yes"){
-	    	console.log("Debug Statment");
+	    	console.log("Debug Statment - Summury");
         console.log("Message Author:");
 	    	console.log(msg.author.username);
         var DebugStatment = `Debug Satement Recived, Reponse(sudo no --mesg ${msg.content} --author ${msg.author.username})`
@@ -182,7 +182,15 @@ bot.on('message', msg => {
         msg.channel.send(DebugStatment);
         msg.channel.send("Full Message Details:");
         SendMessages(ScriptArray,msg);
+
 	    }
+      else if (msg.content.toLowerCase() == "yes -a"){
+        var MsgJSON = stringify(msg)
+        ScriptArray = SliceMessage(MsgJSON);
+        msg.channel.send("Debug Statment - All Info");
+        msg.channel.send("Full Message Details:");
+        SendMessages(ScriptArray,msg);
+      }
 	    else if (msg.content.toLowerCase() == "print doc"){
 	    	GetDocBody(msg,auth)
 	    	
