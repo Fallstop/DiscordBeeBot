@@ -168,6 +168,7 @@ bot.on('message', msg => {
 	    	ScriptArray = SliceMessage(ShrekScript);
 	    	SendMessages(ScriptArray,msg);
 	    }
+	    
 	    else if (msg.content.toLowerCase().includes("noob")){
 	    	ScriptArray = SliceMessage(NavyPasta);
 	    	SendMessages(ScriptArray,msg);
@@ -195,6 +196,12 @@ bot.on('message', msg => {
 	    
 
 
+	}
+	else if (msg.channel.name == 'eggnog' && msg.author.username != 'CJ2005'){
+		if (msg.content.toLowerCase().includes("eggnog!")){
+	    	ScriptArray = SliceMessage(NavyPasta);
+	    	SendMessages(ScriptArray,msg);
+	    } 
 	}
 });
 bot.login(auth.token);
