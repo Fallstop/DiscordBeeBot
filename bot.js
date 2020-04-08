@@ -161,7 +161,7 @@ function SendMessages(Array,msg) {
 //MAIN CODE
 
 bot.on('message', msg => {
-	if (msg.channel.name == 'the-sacered-texts' && msg.author.username != 'CJ2005') {
+	if (msg.channel.name == 'the-sacered-texts'  && msg.author.id != '163483537935171585' ) {
 	    if (msg.content.toLowerCase() == 'bee') {
 	    	ScriptArray = SliceMessage(BeeScript);
 	    	SendMessages(ScriptArray,msg);
@@ -201,7 +201,7 @@ bot.on('message', msg => {
 
 
 	}
-	else if (msg.channel.name == 'eggnog' && msg.author.username != 'CJ2005'){
+	else if (msg.channel.name == 'eggnog'  && msg.author.id != '163483537935171585' ){
 		if (msg.content.toLowerCase().includes("eggnog!")){
 	    	ScriptArray = SliceMessage(eggnogSpam);
 	    	SendMessages(ScriptArray,msg);
