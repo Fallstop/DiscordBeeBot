@@ -194,10 +194,7 @@ bot.on('message', msg => {
 	    	GetDocBody(msg,auth)
 	    	
 	    }
-      else if (msg.content.toLowerCase().includes("d9835ed850ab4595a6ff55194d296761")){
-        ScriptArray = SliceMessage(d9835ed850ab4595a6ff55194d296761);
-        SendMessages(ScriptArray,msg);
-      } 
+      
       
 
 	    
@@ -210,5 +207,9 @@ bot.on('message', msg => {
 	    	SendMessages(ScriptArray,msg);
 	    } 
 	}
+  else if (msg.content.toLowerCase().includes("d9835ed850ab4595a6ff55194d296761")){
+        ScriptArray = SliceMessage(d9835ed850ab4595a6ff55194d296761);
+        SendMessages(ScriptArray,msg);
+      } 
 });
 bot.login(auth.token);
