@@ -11,6 +11,8 @@ var d9835ed850ab4595a6ff55194d296761 = fs.readFileSync('d9835ed850ab4595a6ff5519
 const delay = require('delay');
 logger.info('Loaded Bee movie script');
 
+var dns = require('dns');
+
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -18,89 +20,6 @@ logger.add(new logger.transports.Console, {
 });
 logger.level = 'debug';
 
-//GOOGLE DOCS API
-
-const readline = require('readline');
-const {google} = require('googleapis');
-const TOKEN_PATH = 'token.json';
-const SCOPES = ['https://www.googleapis.com/auth/documents.readonly'];
-// Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
-  if (err) return console.log('Error loading client secret file:', err);
-  // Authorize a client with credentials, then call the Google Docs API.
-  const auth = authorize(JSON.parse(content));
-});
-function authorize(credentials) {
-  const {client_secret, client_id, redirect_uris} = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
-
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client);
-    oAuth2Client.setCredentials(JSON.parse(token));
-    return(oAuth2Client);
-  });
-}
-function getNewToken(oAuth2Client) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error retrieving access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
-      });
-      return(oAuth2Client);
-    });
-  });
-}
-
-
-
-/**
- * Prints the title of a sample doc:
- * https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
- * @param {google.auth.OAuth2} auth The authenticated Google OAuth 2.0 client.
- */
-function printDocTitle(auth) {
-  const docs = google.docs({version: 'v1', auth});
-  docs.documents.get({
-    documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
-  }, (err, res) => {
-    if (err) console.log('The API returned an error: ' + err);
-    console.log("The body of the document is: %j", res.data.body.content[1].paragraph.elements[0].textRun.content);
-  });
-}
-function GetDocBody(msg,auth) {
-  const docs = google.docs({version: 'v1', auth});
-  docs.documents.get({
-    documentId: '1Qy4UPJAaclkHIlRxJc_7nNxHRB3vb6p25KJGu0cTIOI',
-  }, (err, res) => {
-    if (err) msg.channel.send("Sorry Google docs api returned a error: " + err);
-  	Body = res.data.body.content[1].paragraph.elements[0].textRun.content;
-    console.log("Google doc Body grabed");
-    console.log(Body);
-    ScriptArray = SliceMessage(Body);
-	SendMessages(ScriptArray,msg);
-}
-
-    );
-  	
-
-
-}
 
 // Initialize Discord Bot
 const bot = new Discord.Client();
@@ -119,6 +38,9 @@ bot.on('ready', function (evt) {
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id 		+ ')');
 });
+
+
+
 //FUNCTIONS
 
 function SliceMessage(Text) {
@@ -184,7 +106,7 @@ bot.on('message', msg => {
         msg.channel.send(DebugStatment);
 	    }
       else if (msg.content.toLowerCase() == "yes -a"){
-        var MsgJSON = stringify(msg)
+        var MsgJSON = stringify(msg);
         ScriptArray = SliceMessage(MsgJSON);
         msg.channel.send("Debug Statment - All Info");
         msg.channel.send("Full Message Details:");
@@ -210,6 +132,34 @@ bot.on('message', msg => {
   else if (msg.content.toLowerCase().includes("d9835ed850ab4595a6ff55194d296761") && msg.author.id != '628791782007898142'  && msg.author.id != '163483537935171585' ){
         ScriptArray = SliceMessage(d9835ed850ab4595a6ff55194d296761);
         SendMessages(ScriptArray,msg);
-  } 
+  }
+  if (msg.content.toLowerCase() == 'tcip!') {
+  	const http = require('http');
+
+	var options = {
+	  host: 'ipv4bot.whatismyipaddress.com',
+	  port: 80,
+	  path: '/'
+	};
+
+	http.get(options, function(res) {
+
+	  res.on("data", function(chunk) {
+	    var w3 = dns.lookup('mc.qrl.nz', function (err, addresses, family) {
+		  console.log(addresses);
+		  IPResultMessage = "Failure";
+		  if (chunk == addresses) {
+		  	IPResultMessage = "IP is " + chunk + ", which matches the domain mc.qrl.nz";
+		  } else {
+		  	IPResultMessage = "IP is " + chunk + " but the domain mc.qrl.nz points to " + addresses + "	| <@310135293254696970>";
+		  }
+		  msg.channel.send(IPResultMessage);
+		});
+
+	  });
+	}).on('error', function(e) {
+	  console.log("error: " + e.message);
+	});
+  }
 });
 bot.login(auth.token);
