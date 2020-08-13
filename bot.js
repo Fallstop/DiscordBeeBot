@@ -5,6 +5,7 @@ var auth = require('./auth.json');
 var fs = require('fs');
 var BeeScript = fs.readFileSync('BeeMovieScript.txt', 'utf8');
 var ShrekScript = fs.readFileSync('ShrekMovieScript.txt', 'utf8');
+var cowsayShrekScript = fs.readFileSync('cowsayShrek.txt', 'utf8');
 var NavyPasta = fs.readFileSync('NavySeilCopyPasta.txt', 'utf8');
 var eggnogSpam = fs.readFileSync('eggnog.txt', 'utf8');
 var d9835ed850ab4595a6ff55194d296761 = fs.readFileSync('d9835ed850ab4595a6ff55194d296761.txt','utf8');
@@ -90,6 +91,9 @@ bot.on('message', msg => {
 	    }
 	    else if (msg.content.toLowerCase() == "shrek"){
 	    	ScriptArray = SliceMessage(ShrekScript);
+	    	SendMessages(ScriptArray,msg);
+	    } else if (msg.content.toLowerCase() == "cowsay shrek"){
+	    	ScriptArray = SliceMessage(cowsayShrekScript);
 	    	SendMessages(ScriptArray,msg);
 	    }
 	    
