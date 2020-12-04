@@ -1,7 +1,9 @@
 var Discord = require('discord.js');
 var logger = require('winston');
 var stringify = require('json-stringify-safe');
-var auth = require('./auth.json');
+var discordAuth = require('./discordAuth.json');
+var cloudflareAuth = require('./cloudflareAuth.json');
+
 var fs = require('fs');
 // var cowsayShrekScript = fs.readFileSync('cowsayShrek.txt', 'utf8');
 // var NavyPasta = fs.readFileSync('NavySeilCopyPasta.txt', 'utf8');
@@ -51,41 +53,54 @@ bot.on('ready', function (evt) {
 
 var ddns = require("cloudflare-dynamic-dns");
 
-var ddnsOptions = {
-	auth: {
-		email: "<email>",
-		key: "<key>"
-	},
-	recordName: "foo.bar.com",
-	zoneName: "bar.com"
-};
 
 //FUNCTIONS
 
-function getCurrentIP() {
+function autoCorrectDNS(msg) {
 	const http = require('http');
 
-	var options = {
+	var ipAddressWebsite = {
 		host: 'ipv4bot.whatismyipaddress.com',
 		port: 80,
 		path: '/'
 	};
 
-	http.get(options, function (res) {
-		res.on("data", function (chunk) {
-			return chunk;
+	http.get(ipAddressWebsite, function (res) {
+		res.on("data", function (currentIP) {
+			dns.lookup('mc.qrl.nz', function (err, DomainIP, family) {
+				if (currentIP == DomainIP) {
+					IPResultMessage = "IP is " + currentIP + ", which matches the domain mc.qrl.nz";
+					msg.channel.send(IPResultMessage);
+				} else { // IP is not correct
+					IPResultMessage = "IP is " + currentIP + " but the domain mc.qrl.nz points to " + DomainIP + ". Attempting DNS auto-correction";
+					msg.channel.send(IPResultMessage);
+					ddns.update({
+						"auth": {
+							"email": "kevin@ngita.co.nz",
+							"key": "UtKbtCvix5NLIkJVKRGN1BsyHAB5_DoaVUsJIndO"
+						},
+						"recordName": "mc.qrl.nz",
+						"zoneName": "qrl.nz"
+					}, function (err) {
+						if (err) {
+							console.log("An error occurred:");
+							msg.channel.send("DNS was not able to be auto-corrected | <@310135293254696970>");
+							console.log(err);
+							console.log(cloudflareAuth);
+						} else {
+							console.log("Success!");
+							msg.channel.send("DNS has been auto-corrected, the update should take effect in ~5-30mins")
+						}
+					});
+		
+				}
+			});
 
 		});
-	}).on('error', function (e) {
-		console.log("error: " + e.message);
-		return "";
-	});
-
-}
-
-function getCurrentDNS() {
-	var w3 = dns.lookup('mc.qrl.nz', function (err, address, family) {
-		return address;
+	}).on('error', function (err) {
+		console.log("An error occurred:");
+		msg.channel.send("IP of server was not able to be found | <@310135293254696970>")
+		console.log(err);
 	});
 }
 
@@ -129,7 +144,11 @@ function SendMessages(Array, msg) {
 //MAIN CODE
 
 bot.on('message', msg => {
-	if (msg.channel.name == 'the-sacered-texts' && msg.author.id != '163483537935171585') {
+	if (msg.author.bot) return;
+
+	msgCommand = msg.content.toLowerCase();
+
+	if (msg.channel.name == 'the-sacered-texts') {
 		// if (msg.content.toLowerCase() == 'bee') {
 		// 	ScriptArray = SliceMessage(BeeScript);
 		// 	SendMessages(ScriptArray, msg);
@@ -147,41 +166,16 @@ bot.on('message', msg => {
 		// 	SendMessages(ScriptArray, msg);
 		// }
 
-		msgCommand = msg.content.toLowerCase();
+		
 
 		for (command in scriptsCommandToFileMap) {
+			console.log(command)
 			if (msgCommand == command) {
-				
+				console.log("Tes")
 				SendMessages(SliceMessage(fs.readFileSync(scriptsCommandToFileMap[command],'utf8')), msg);
 
 			}
 		}
-
-		if (msg.content.toLowerCase() == "yes") {
-			console.log("Debug Statement - Summary");
-			msg.channel.send("Debug Statement - Summary");
-			console.log("Message Author:");
-			console.log(msg.author.username);
-			var DebugStatment = `Debug Statement Received, Reponse(sudo no --mesg "${msg.content}" --author "${msg.author.username}")`
-			msg.channel.send(DebugStatment);
-		}
-		else if (msg.content.toLowerCase() == "yes -a") {
-			var MsgJSON = stringify(msg);
-			ScriptArray = SliceMessage(MsgJSON);
-			msg.channel.send("Debug Statment - All Info");
-			msg.channel.send("Full Message Details:");
-			SendMessages(ScriptArray, msg);
-		}
-		else if (msg.content.toLowerCase() == "print doc") {
-			GetDocBody(msg, auth)
-
-		}
-
-
-
-
-
-
 	}
 	else if (msg.channel.name == 'eggnog' && msg.author.id != '163483537935171585') {
 		if (msg.content.toLowerCase().includes("eggnog!")) {
@@ -194,28 +188,7 @@ bot.on('message', msg => {
 		SendMessages(ScriptArray, msg);
 	}
 	if (msg.content.toLowerCase() == 'tcip!') {
-		currentIP = getCurrentIP();
-		currentDNS = getCurrentDNS();
-
-		if (currentDNS == currentIP) {
-			IPResultMessage = "IP is " + chunk + ", which matches the domain mc.qrl.nz";
-			msg.channel.send(IPResultMessage);
-		} else { // IP is not correct
-			IPResultMessage = "IP is " + chunk + " but the domain mc.qrl.nz points to " + addresses + ". Attempting DNS auto-correction";
-			msg.channel.send(IPResultMessage);
-			ddns.update(ddnsOptions, function (err) {
-				if (err) {
-					console.log("An error occurred:");
-					msg.channel.send("DNS was not able to be auto-corrected | <@310135293254696970>")
-					console.log(err);
-				} else {
-					console.log("Success!");
-					msg.channel.send("DNS has been auto-corrected, the update should take effect in ~5-30mins")
-				}
-			});
-
-		}
-
+		autoCorrectDNS(msg);
 	}
 });
-bot.login(auth.token);
+bot.login(discordAuth.token);
