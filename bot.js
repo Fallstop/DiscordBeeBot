@@ -74,14 +74,7 @@ function autoCorrectDNS(msg) {
 				} else { // IP is not correct
 					IPResultMessage = "IP is " + currentIP + " but the domain mc.qrl.nz points to " + DomainIP + ". Attempting DNS auto-correction";
 					msg.channel.send(IPResultMessage);
-					ddns.update({
-						"auth": {
-							"email": "kevin@ngita.co.nz",
-							"key": "UtKbtCvix5NLIkJVKRGN1BsyHAB5_DoaVUsJIndO"
-						},
-						"recordName": "mc.qrl.nz",
-						"zoneName": "qrl.nz"
-					}, function (err) {
+					ddns.update(cloudflareAuth, function (err) {
 						if (err) {
 							console.log("An error occurred:");
 							msg.channel.send("DNS was not able to be auto-corrected | <@310135293254696970>");
