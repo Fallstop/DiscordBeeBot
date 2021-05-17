@@ -7,6 +7,7 @@
   "dependencies": {
     "bufferutil": "^4.0.1",
     "cloudflare-dynamic-dns": "^1.0.2",
+    "cowsay": "^1.4.0",
     "delay": "^4.3.0",
     "discord.js": "^11.5.1",
     "json-stringify-safe": "^5.0.1",

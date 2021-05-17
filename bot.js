@@ -3,6 +3,7 @@ var logger = require('winston');
 var stringify = require('json-stringify-safe');
 var discordAuth = require('./discordAuth.json');
 var cloudflareAuth = require('./cloudflareAuth.json');
+var cowsay = require('cowsay');
 
 var fs = require('fs');
 // var cowsayShrekScript = fs.readFileSync('cowsayShrek.txt', 'utf8');
@@ -21,7 +22,8 @@ var scriptsCommandToFileMap = {
 	"cowsay shrek": "cowsayShrek.txt",
 	"eggnog": "eggnog.txt",
 	"d9835ed850ab4595a6ff55194d296761": "d9835ed850ab4595a6ff55194d296761.txt",
-	"oh god": "oh-god-e.txt"
+	"oh god": "oh-god-e.txt",
+	"hello there": "starwarsHelloThere.txt"
 }
 
 // Configure logger settings
@@ -151,7 +153,7 @@ bot.on('message', msg => {
 			if (msgCommand == command) {
 				console.log("Tes")
 				SendMessages(SliceMessage(fs.readFileSync(scriptsCommandToFileMap[command],'utf8')), msg);
-
+				return
 			}
 		}
 	}
@@ -167,6 +169,9 @@ bot.on('message', msg => {
 	}
 	if (msg.content.toLowerCase() == 'tcip!') {
 		autoCorrectDNS(msg);
+	}
+	if (msg.content.startsWith('cowsay ')) {
+		SendMessages(SliceMessage(cowsay.say({text: msg.content.substring(7)})), msg);
 	}
 });
 bot.login(discordAuth.token);
