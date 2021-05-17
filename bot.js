@@ -3,8 +3,10 @@ var logger = require('winston');
 var stringify = require('json-stringify-safe');
 var discordAuth = require('./discordAuth.json');
 var cloudflareAuth = require('./cloudflareAuth.json');
-var cowsay = require('cowsay');
 
+
+var cowsay = require('cowsay');
+const fetch = require('node-fetch');
 var fs = require('fs');
 // var cowsayShrekScript = fs.readFileSync('cowsayShrek.txt', 'utf8');
 // var NavyPasta = fs.readFileSync('NavySeilCopyPasta.txt', 'utf8');

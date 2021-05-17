@@ -11,6 +11,7 @@
     "delay": "^4.3.0",
     "discord.js": "^11.5.1",
     "json-stringify-safe": "^5.0.1",
+    "node-fetch": "^2.6.1",
     "websocket": "^1.0.32",
     "winston": "^3.2.1"
   }
