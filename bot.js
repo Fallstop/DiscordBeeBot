@@ -20,7 +20,8 @@ var scriptsCommandToFileMap = {
 	"shrek": "ShrekMovieScript.txt",
 	"cowsay shrek": "cowsayShrek.txt",
 	"eggnog": "eggnog.txt",
-	"d9835ed850ab4595a6ff55194d296761": "d9835ed850ab4595a6ff55194d296761.txt"
+	"d9835ed850ab4595a6ff55194d296761": "d9835ed850ab4595a6ff55194d296761.txt",
+	"oh god": "oh-god-e.txt"
 }
 
 // Configure logger settings
@@ -142,22 +143,6 @@ bot.on('message', msg => {
 	msgCommand = msg.content.toLowerCase();
 
 	if (msg.channel.name == 'the-sacered-texts') {
-		// if (msg.content.toLowerCase() == 'bee') {
-		// 	ScriptArray = SliceMessage(BeeScript);
-		// 	SendMessages(ScriptArray, msg);
-		// }
-		// else if (msg.content.toLowerCase() == "shrek") {
-		// 	ScriptArray = SliceMessage(ShrekScript);
-		// 	SendMessages(ScriptArray, msg);
-		// } else if (msg.content.toLowerCase() == "cowsay shrek") {
-		// 	ScriptArray = SliceMessage(cowsayShrekScript);
-		// 	SendMessages(ScriptArray, msg);
-		// }
-
-		// else if (msg.content.toLowerCase() = "noob") {
-		// 	ScriptArray = SliceMessage(NavyPasta);
-		// 	SendMessages(ScriptArray, msg);
-		// }
 
 		
 
