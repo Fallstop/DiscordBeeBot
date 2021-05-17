@@ -24,6 +24,7 @@ var scriptsCommandToFileMap = {
 	"d9835ed850ab4595a6ff55194d296761": "d9835ed850ab4595a6ff55194d296761.txt",
 	"oh god": "oh-god-e.txt",
 	"hello there": "starwarsHelloThere.txt"
+	
 }
 
 // Configure logger settings
@@ -172,6 +173,30 @@ bot.on('message', msg => {
 	}
 	if (msg.content.startsWith('cowsay ')) {
 		SendMessages(SliceMessage("```" +cowsay.say({text:msg.content.substring(7)})+"```"), msg);
+	}
+	if (msg.content.startsWith( 'day!')) {
+		let date = msg.content.substring(4) ?? ""
+		fetch(`https://hctools.jmw.nz/api/gettimetableday/${date}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data["isSchoolDay"]) {
+                console.log(data["currentDay"]);
+                msg.channel.send("Day " + data["currentDay"]);
+            } else if (!data["isSchoolDay"]) {
+                msg.channel.send("Not a school day");
+            }
+            else if ('internalError' in data) {
+                console.log("Error in gettimetableday API | <@310135293254696970>");
+				msg.channel.send("Error in gettimetableday API | <@310135293254696970>");
+            }
+            
+        })
+        .catch(error => {
+            console.log("Error in gettimetableday API | <@310135293254696970>");
+			msg.channel.send("Error in gettimetableday API | <@310135293254696970> ```"+error+"```");
+        });
+
 	}
 });
 bot.login(discordAuth.token);
