@@ -171,7 +171,7 @@ bot.on('message', msg => {
 		autoCorrectDNS(msg);
 	}
 	if (msg.content.startsWith('cowsay ')) {
-		SendMessages(SliceMessage(cowsay.say({text:"```" +msg.content.substring(7)+"```"})), msg);
+		SendMessages(SliceMessage("```" +cowsay.say({text:msg.content.substring(7)})+"```"), msg);
 	}
 });
 bot.login(discordAuth.token);
