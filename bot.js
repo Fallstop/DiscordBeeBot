@@ -153,7 +153,7 @@ function HtmlToDiscord(input) {
 	input = input.replace(/<\/?p>/ig, '\n')
 	//General Cleanup of HTML
 	input = input.replace(/<\/?.+>/ig, '')
-	input = decodeURI(input);
+	input = decodeURIComponent(input);
 	return input
 }
 
