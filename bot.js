@@ -5,13 +5,11 @@ var discordAuth = require('./discordAuth.json');
 var cloudflareAuth = require('./cloudflareAuth.json');
 
 
-var cowsay = require('cowsay');
+const cowsay = require('cowsay');
 const fetch = require('node-fetch');
-var fs = require('fs');
-// var cowsayShrekScript = fs.readFileSync('cowsayShrek.txt', 'utf8');
-// var NavyPasta = fs.readFileSync('NavySeilCopyPasta.txt', 'utf8');
-// var eggnogSpam = fs.readFileSync('eggnog.txt', 'utf8');
-// var d9835ed850ab4595a6ff55194d296761 = fs.readFileSync('d9835ed850ab4595a6ff55194d296761.txt', 'utf8');
+const fs = require('fs');
+const he = require('he');
+
 const delay = require('delay');
 logger.info('Loaded Bee movie script');
 
@@ -153,7 +151,7 @@ function HtmlToDiscord(input) {
 	input = input.replace(/<\/?p>/ig, '\n')
 	//General Cleanup of HTML
 	input = input.replace(/<\/?.+>/ig, '')
-	input = decodeURIComponent(input);
+	input = he.decode(input);
 	return input
 }
 
