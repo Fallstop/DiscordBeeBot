@@ -25,9 +25,10 @@ var scriptsCommandToFileMap = {
 	"eggnog": "eggnog.txt",
 	"d9835ed850ab4595a6ff55194d296761": "d9835ed850ab4595a6ff55194d296761.txt",
 	"oh god": "oh-god-e.txt",
-	"hello there": "starwarsHelloThere.txt"
-	
+	"hello there": "starwarsHelloThere.txt",
+	"Show Me The Star Wars": "AllHailStarWars.txt"
 }
+	
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -141,17 +142,14 @@ function SendMessages(Array, msg) {
 }
 
 function HtmlToDiscord(input) {
-	input.replace(/<b\/?>/ig, '**')
-	input.replace(/<br\/?>/ig, '\n')
-	input.replace(/<em\/?>/ig, '***')
-	input.replace(/<strike\/?>/ig, '~~')
-	input.replace(/<del\/?>/ig, '~~')
-	input.replace(/<s\/?>/ig, '~~')
-	input.replace(/<p\/?>/ig, '\n')
-
-
-
-	input.replace( /(<([^>]+)>)/ig, '')
+	input = input.replace(/<\/?b>/ig, '**')
+	input = input.replace(/<\/?br>/ig, '\n')
+	input = input.replace(/<\/?em>/ig, '***')
+	input = input.replace(/<\/?strike>/ig, '~~')
+	input = input.replace(/<\/?del>/ig, '~~')
+	input = input.replace(/<\/?s>/ig, '~~')
+	input = input.replace(/<\/?p>/ig, '\n')
+	input = input.replace(/<\/?.+>/ig, '')
 	return input
 }
 
@@ -216,7 +214,7 @@ bot.on('message', msg => {
 
 	}
 	if (msg.content.startsWith( 'notice!')) {
-		let date = msg.content.substring(4) ?? ""
+		let date = msg.content.substring(7) ?? ""
 		fetch(`https://hctools.jmw.nz/api/getdailynotice/${date}`)
         .then(response => response.json())
         .then(data => {
