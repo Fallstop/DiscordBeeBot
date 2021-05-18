@@ -222,7 +222,7 @@ bot.on('message', msg => {
         .then(data => {
             console.log(data);
             if (data["isSchoolDay"]) {
-                console.log(data["noticeText"]);
+                console.log(HtmlToDiscord(data["noticeText"]));
                 msg.channel.send(HtmlToDiscord(data["noticeText"]));
             } else if (!data["isSchoolDay"]) {
                 msg.channel.send("Not a school day");
