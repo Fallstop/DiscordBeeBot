@@ -140,6 +140,21 @@ function SendMessages(Array, msg) {
 	}
 }
 
+function HtmlToDiscord(input) {
+	input.replace(/<b\/?>/ig, '**')
+	input.replace(/<br\/?>/ig, '\n')
+	input.replace(/<em\/?>/ig, '***')
+	input.replace(/<strike\/?>/ig, '~~')
+	input.replace(/<del\/?>/ig, '~~')
+	input.replace(/<s\/?>/ig, '~~')
+	input.replace(/<p\/?>/ig, '\n')
+
+
+
+	input.replace( /(<([^>]+)>)/ig, '')
+	return input
+}
+
 //MAIN CODE
 
 bot.on('message', msg => {
@@ -197,6 +212,30 @@ bot.on('message', msg => {
         .catch(error => {
             console.log("Error in gettimetableday API | <@310135293254696970>");
 			msg.channel.send("Error in gettimetableday API | <@310135293254696970> ```"+error+"```");
+        });
+
+	}
+	if (msg.content.startsWith( 'notice!')) {
+		let date = msg.content.substring(4) ?? ""
+		fetch(`https://hctools.jmw.nz/api/getdailynotice/${date}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data["isSchoolDay"]) {
+                console.log(data["noticeText"]);
+                msg.channel.send(HtmlToDiscord(data["noticeText"]));
+            } else if (!data["isSchoolDay"]) {
+                msg.channel.send("Not a school day");
+            }
+            else if ('internalError' in data) {
+                console.log("Error in getdailynotice API | <@310135293254696970>");
+				msg.channel.send("Error in getdailynotice API | <@310135293254696970>");
+            }
+            
+        })
+        .catch(error => {
+            console.log("Error in getdailynotice API | <@310135293254696970>");
+			msg.channel.send("Error in getdailynotice API | <@310135293254696970> ```"+error+"```");
         });
 
 	}
