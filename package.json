@@ -6,6 +6,7 @@
   "author": "Barry",
   "dependencies": {
     "bufferutil": "^4.0.1",
+    "chunk-text": "^2.0.1",
     "cloudflare-dynamic-dns": "^1.0.2",
     "cowsay": "^1.1.1",
     "delay": "^4.3.0",

@@ -9,6 +9,7 @@ const cowsay = require('cowsay');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const he = require('he');
+const chunk = require('chunk-text');
 
 const delay = require('delay');
 logger.info('Loaded Bee movie script');
@@ -104,30 +105,32 @@ function autoCorrectDNS(msg) {
 
 function SliceMessage(Text) {
 	//Function to Take a Large String and split it into a array
-	var SliceMessages = [];
-	var SliceSection = "";
-	var NumberOfSlices = 0;
-	var i = 0;
-	var x = 2000; //Character Limit 
-	NumberOfSlices = Math.ceil(Text.length / x);
-	console.log(NumberOfSlices);
-	while (i < NumberOfSlices - 1) {
-		SliceSection = Text.slice(i * x, x * (i + 1));
+	// var SliceMessages = [];
+	// var SliceSection = "";
+	// var NumberOfSlices = 0;
+	// var i = 0;
+	// var x = 2000; //Character Limit 
+	// NumberOfSlices = Math.ceil(Text.length / x);
+	// console.log(NumberOfSlices);
+	// while (i < NumberOfSlices - 1) {
+	// 	SliceSection = Text.slice(i * x, x * (i + 1));
 
-		if (SliceSection.length <= 2000) {
-			console.log(SliceSection.length);
-			SliceMessages.push(SliceSection);
-		}
-		else {
-			console.log('Over Limit');
-			console.log(SliceSection.length);
-		}
-		i += 1;
-	}
-	SliceSection = Text.slice(i * x, Text.length);
-	SliceMessages.push(SliceSection);
+	// 	if (SliceSection.length <= 2000) {
+	// 		console.log(SliceSection.length);
+	// 		SliceMessages.push(SliceSection);
+	// 	}
+	// 	else {
+	// 		console.log('Over Limit');
+	// 		console.log(SliceSection.length);
+	// 	}
+	// 	i += 1;
+	// }
+	// SliceSection = Text.slice(i * x, Text.length);
+	// SliceMessages.push(SliceSection);
 
-	return (SliceMessages);
+	
+
+	return chunk(Text, 2000);
 }
 function SendMessages(Array, msg) {
 	var i = 0;
@@ -135,7 +138,7 @@ function SendMessages(Array, msg) {
 		console.log('Sending A Message');
 		msg.channel.send(Array[i]);
 		i += 1;
-		delay(200);
+		delay(400);
 	}
 }
 
