@@ -204,6 +204,7 @@ bot.on('message', msg => {
 			do {
 				fetched = await msg.channel.fetchMessages({ limit: 100 });
 				msg.channel.channel.bulkDelete(fetched);
+				console.log("Delete go brrrr",fetched.length)
 			}
 			while (fetched.size >= 2);
 			msg.channel.send("Literally nothing to see here...")
