@@ -104,32 +104,6 @@ function autoCorrectDNS(msg) {
 }
 
 function SliceMessage(Text) {
-	//Function to Take a Large String and split it into a array
-	// var SliceMessages = [];
-	// var SliceSection = "";
-	// var NumberOfSlices = 0;
-	// var i = 0;
-	// var x = 2000; //Character Limit 
-	// NumberOfSlices = Math.ceil(Text.length / x);
-	// console.log(NumberOfSlices);
-	// while (i < NumberOfSlices - 1) {
-	// 	SliceSection = Text.slice(i * x, x * (i + 1));
-
-	// 	if (SliceSection.length <= 2000) {
-	// 		console.log(SliceSection.length);
-	// 		SliceMessages.push(SliceSection);
-	// 	}
-	// 	else {
-	// 		console.log('Over Limit');
-	// 		console.log(SliceSection.length);
-	// 	}
-	// 	i += 1;
-	// }
-	// SliceSection = Text.slice(i * x, Text.length);
-	// SliceMessages.push(SliceSection);
-
-
-
 	return chunk(Text, 2000);
 }
 function SendMessages(Array, msg) {
@@ -202,7 +176,7 @@ bot.on('message', async msg => {
 
 		do {
 			fetched = await msg.channel.fetchMessages({ limit: 100 });
-			msg.channel.bulkDelete(fetched);
+			await msg.channel.bulkDelete(fetched);
 			console.log("Delete go brrrr", fetched.size)
 		}
 		while (fetched.size >= 2);
