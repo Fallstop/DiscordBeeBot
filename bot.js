@@ -195,14 +195,16 @@ bot.on('message', msg => {
 		SendMessages(SliceMessage("```" +cowsay.say({text:msg.content.substring(7)})+"```"), msg);
 	}
 	if (msg.channel.name.toLowerCase()=="admin" &&msg.content == 'SUS!') {
-		async () => {
-			let fetched;
-			do {
-			  fetched = await msg.channel.fetchMessages({limit: 100});
-			  msg.channel.channel.bulkDelete(fetched);
-			}
-			while(fetched.size >= 2);
-		  }
+		console.log("Nuke mode activated")
+		msg.channel.send("Nuke intensifies")
+
+		let fetched;
+		do {
+			fetched = await msg.channel.fetchMessages({limit: 100});
+			msg.channel.channel.bulkDelete(fetched);
+		}
+		while(fetched.size >= 2);
+		msg.channel.send("Literally nothing to see here...")
 	}
 	if (msg.content.startsWith( 'day!')) {
 		let date = msg.content.substring(4) ?? ""
