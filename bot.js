@@ -160,7 +160,7 @@ function HtmlToDiscord(input) {
 
 //MAIN CODE
 
-bot.on('message', msg => {
+bot.on('message', async msg => {
 	if (msg.author.bot) return;
 
 	msgCommand = msg.content.toLowerCase();
@@ -196,19 +196,19 @@ bot.on('message', msg => {
 	}
 	if (msg.channel.name.toLowerCase() == "admin" && msg.content.toLowerCase()  == 'sus!') {
 		console.log("Nuke mode activated")
-		async () => {
-
 			msg.channel.send("Nuke intensifies")
 
 			let fetched;
+			console.log("Getting messages",msg.channel)
+
 			do {
+				msg.channel.send("Getting messages",msg.channel)
 				fetched = await msg.channel.fetchMessages({ limit: 100 });
-				msg.channel.channel.bulkDelete(fetched);
-				console.log("Delete go brrrr",fetched.length)
+				msg.channel.bulkDelete(fetched);
+				console.log("Delete go brrrr",fetched.size)
 			}
 			while (fetched.size >= 2);
 			msg.channel.send("Literally nothing to see here...")
-		}
 	}
 	if (msg.content.startsWith('day!')) {
 		let date = msg.content.substring(4) ?? ""
