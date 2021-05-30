@@ -27,7 +27,7 @@ var scriptsCommandToFileMap = {
 	"hello there": "starwarsHelloThere.txt",
 	"Show Me The Star Wars": "AllHailStarWars.txt"
 }
-	
+
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -91,7 +91,7 @@ function autoCorrectDNS(msg) {
 							msg.channel.send("DNS has been auto-corrected, the update should take effect in ~5-30mins")
 						}
 					});
-		
+
 				}
 			});
 
@@ -128,7 +128,7 @@ function SliceMessage(Text) {
 	// SliceSection = Text.slice(i * x, Text.length);
 	// SliceMessages.push(SliceSection);
 
-	
+
 
 	return chunk(Text, 2000);
 }
@@ -167,13 +167,13 @@ bot.on('message', msg => {
 
 	if (msg.channel.name == 'the-sacered-texts') {
 
-		
+
 
 		for (command in scriptsCommandToFileMap) {
 			console.log(command)
 			if (msgCommand == command) {
 				console.log("Tes")
-				SendMessages(SliceMessage(fs.readFileSync(scriptsCommandToFileMap[command],'utf8')), msg);
+				SendMessages(SliceMessage(fs.readFileSync(scriptsCommandToFileMap[command], 'utf8')), msg);
 				return
 			}
 		}
@@ -192,66 +192,69 @@ bot.on('message', msg => {
 		autoCorrectDNS(msg);
 	}
 	if (msg.content.startsWith('cowsay ')) {
-		SendMessages(SliceMessage("```" +cowsay.say({text:msg.content.substring(7)})+"```"), msg);
+		SendMessages(SliceMessage("```" + cowsay.say({ text: msg.content.substring(7) }) + "```"), msg);
 	}
-	if (msg.channel.name.toLowerCase()=="admin" &&msg.content == 'SUS!') {
+	if (msg.channel.name.toLowerCase() == "admin" && msg.content.toLowerCase()  == 'sus!') {
 		console.log("Nuke mode activated")
-		msg.channel.send("Nuke intensifies")
+		async () => {
 
-		let fetched;
-		do {
-			fetched = await msg.channel.fetchMessages({limit: 100});
-			msg.channel.channel.bulkDelete(fetched);
+			msg.channel.send("Nuke intensifies")
+
+			let fetched;
+			do {
+				fetched = await msg.channel.fetchMessages({ limit: 100 });
+				msg.channel.channel.bulkDelete(fetched);
+			}
+			while (fetched.size >= 2);
+			msg.channel.send("Literally nothing to see here...")
 		}
-		while(fetched.size >= 2);
-		msg.channel.send("Literally nothing to see here...")
 	}
-	if (msg.content.startsWith( 'day!')) {
+	if (msg.content.startsWith('day!')) {
 		let date = msg.content.substring(4) ?? ""
 		fetch(`https://hctools.jmw.nz/api/gettimetableday/${date}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data["isSchoolDay"]) {
-                console.log(data["currentDay"]);
-                msg.channel.send("Day " + data["currentDay"]);
-            } else if (!data["isSchoolDay"]) {
-                msg.channel.send("Not a school day");
-            }
-            else if ('internalError' in data) {
-                console.log("Error in gettimetableday API | <@310135293254696970>");
-				msg.channel.send("Error in gettimetableday API | <@310135293254696970>");
-            }
-            
-        })
-        .catch(error => {
-            console.log("Error in gettimetableday API | <@310135293254696970>");
-			msg.channel.send("Error in gettimetableday API | <@310135293254696970> ```"+error+"```");
-        });
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				if (data["isSchoolDay"]) {
+					console.log(data["currentDay"]);
+					msg.channel.send("Day " + data["currentDay"]);
+				} else if (!data["isSchoolDay"]) {
+					msg.channel.send("Not a school day");
+				}
+				else if ('internalError' in data) {
+					console.log("Error in gettimetableday API | <@310135293254696970>");
+					msg.channel.send("Error in gettimetableday API | <@310135293254696970>");
+				}
+
+			})
+			.catch(error => {
+				console.log("Error in gettimetableday API | <@310135293254696970>");
+				msg.channel.send("Error in gettimetableday API | <@310135293254696970> ```" + error + "```");
+			});
 
 	}
-	if (msg.content.startsWith( 'notice!')) {
+	if (msg.content.startsWith('notice!')) {
 		let date = msg.content.substring(7) ?? ""
 		fetch(`https://hctools.jmw.nz/api/getdailynotice/${date}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data["isSchoolDay"]) {
-                console.log(HtmlToDiscord(data["noticeText"]));
-                SendMessages(SliceMessage(HtmlToDiscord(data["noticeText"])), msg);
-            } else if (!data["isSchoolDay"]) {
-                msg.channel.send("Not a school day");
-            }
-            else if ('internalError' in data) {
-                console.log("Error in getdailynotice API | <@310135293254696970>");
-				msg.channel.send("Error in getdailynotice API | <@310135293254696970>");
-            }
-            
-        })
-        .catch(error => {
-            console.log("Error in getdailynotice API | <@310135293254696970>");
-			msg.channel.send("Error in getdailynotice API | <@310135293254696970> ```"+error+"```");
-        });
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				if (data["isSchoolDay"]) {
+					console.log(HtmlToDiscord(data["noticeText"]));
+					SendMessages(SliceMessage(HtmlToDiscord(data["noticeText"])), msg);
+				} else if (!data["isSchoolDay"]) {
+					msg.channel.send("Not a school day");
+				}
+				else if ('internalError' in data) {
+					console.log("Error in getdailynotice API | <@310135293254696970>");
+					msg.channel.send("Error in getdailynotice API | <@310135293254696970>");
+				}
+
+			})
+			.catch(error => {
+				console.log("Error in getdailynotice API | <@310135293254696970>");
+				msg.channel.send("Error in getdailynotice API | <@310135293254696970> ```" + error + "```");
+			});
 
 	}
 });
