@@ -199,10 +199,8 @@ bot.on('message', async msg => {
 			msg.channel.send("Nuke intensifies")
 
 			let fetched;
-			console.log("Getting messages",msg.channel)
 
 			do {
-				msg.channel.send("Getting messages",msg.channel)
 				fetched = await msg.channel.fetchMessages({ limit: 100 });
 				msg.channel.bulkDelete(fetched);
 				console.log("Delete go brrrr",fetched.size)
