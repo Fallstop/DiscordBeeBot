@@ -104,32 +104,6 @@ function autoCorrectDNS(msg) {
 }
 
 function SliceMessage(Text) {
-	//Function to Take a Large String and split it into a array
-	// var SliceMessages = [];
-	// var SliceSection = "";
-	// var NumberOfSlices = 0;
-	// var i = 0;
-	// var x = 2000; //Character Limit 
-	// NumberOfSlices = Math.ceil(Text.length / x);
-	// console.log(NumberOfSlices);
-	// while (i < NumberOfSlices - 1) {
-	// 	SliceSection = Text.slice(i * x, x * (i + 1));
-
-	// 	if (SliceSection.length <= 2000) {
-	// 		console.log(SliceSection.length);
-	// 		SliceMessages.push(SliceSection);
-	// 	}
-	// 	else {
-	// 		console.log('Over Limit');
-	// 		console.log(SliceSection.length);
-	// 	}
-	// 	i += 1;
-	// }
-	// SliceSection = Text.slice(i * x, Text.length);
-	// SliceMessages.push(SliceSection);
-
-
-
 	return chunk(Text, 2000);
 }
 function SendMessages(Array, msg) {
@@ -160,7 +134,7 @@ function HtmlToDiscord(input) {
 
 //MAIN CODE
 
-bot.on('message', msg => {
+bot.on('message', async msg => {
 	if (msg.author.bot) return;
 
 	msgCommand = msg.content.toLowerCase();
@@ -194,21 +168,19 @@ bot.on('message', msg => {
 	if (msg.content.startsWith('cowsay ')) {
 		SendMessages(SliceMessage("```" + cowsay.say({ text: msg.content.substring(7) }) + "```"), msg);
 	}
-	if (msg.channel.name.toLowerCase() == "admin" && msg.content.toLowerCase()  == 'sus!') {
+	if (msg.channel.name.toLowerCase().includes("admin") && msg.content.toLowerCase() == 'sus!') {
 		console.log("Nuke mode activated")
-		async () => {
+		msg.channel.send("Nuke intensifies")
 
-			msg.channel.send("Nuke intensifies")
+		let fetched;
 
-			let fetched;
-			do {
-				fetched = await msg.channel.fetchMessages({ limit: 100 });
-				msg.channel.channel.bulkDelete(fetched);
-				console.log("Delete go brrrr",fetched.length)
-			}
-			while (fetched.size >= 2);
-			msg.channel.send("Literally nothing to see here...")
+		do {
+			fetched = await msg.channel.fetchMessages({ limit: 100 });
+			await msg.channel.bulkDelete(fetched);
+			console.log("Delete go brrrr", fetched.size)
 		}
+		while (fetched.size >= 2);
+		msg.channel.send("Literally nothing to see here...")
 	}
 	if (msg.content.startsWith('day!')) {
 		let date = msg.content.substring(4) ?? ""
