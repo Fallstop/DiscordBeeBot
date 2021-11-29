@@ -107,8 +107,8 @@ bot.on('message', async msg => {
 		}
 	}
 	else if (msg.channel.name == 'eggnog' && msg.author.id != '163483537935171585') {
-		if (msg.content.toLowerCase().includes("eggnog!")) {
-			ScriptArray = SliceMessage(eggnogSpam);
+		if (msg.content.toLowerCase().includes("eggnog")) {
+			ScriptArray = SliceMessage(fs.readFileSync(scriptsCommandToFileMap["eggnog"], 'utf8'));
 			SendMessages(ScriptArray, msg);
 		}
 	}
