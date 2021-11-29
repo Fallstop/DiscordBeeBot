@@ -1,4 +1,4 @@
-FROM node:v17.1.0
+FROM node:latest
 
 # Create the directory!
 RUN mkdir -p /usr/src/bot
@@ -12,4 +12,4 @@ RUN npm install
 COPY . /usr/src/bot
 
 # Start me!
-CMD ["npm", "run", "install"]
+CMD ["npm", "run", "start"]
