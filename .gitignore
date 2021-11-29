@@ -4,3 +4,4 @@ node_modules/
 auth.json
 discordAuth.json
 cloudflareAuth.json
+.env

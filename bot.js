@@ -1,8 +1,8 @@
 var Discord = require('discord.js');
 var logger = require('winston');
-var stringify = require('json-stringify-safe');
-var discordAuth = require('./discordAuth.json');
-var cloudflareAuth = require('./cloudflareAuth.json');
+require('dotenv').config()
+
+var discordAuth = JSON.parse(process.env.DISCORD_AUTH)
 
 
 const cowsay = require('cowsay');
@@ -14,7 +14,6 @@ const chunk = require('chunk-text');
 const delay = require('delay');
 logger.info('Loaded Bee movie script');
 
-var dns = require('dns');
 
 // Define all scripts Available
 var scriptsCommandToFileMap = {
@@ -55,53 +54,8 @@ bot.on('ready', function (evt) {
 	logger.info(bot.username + ' - (' + bot.id + ')');
 });
 
-//Initialize Cloudflare
-
-var ddns = require("cloudflare-dynamic-dns");
-
 
 //FUNCTIONS
-
-function autoCorrectDNS(msg) {
-	const http = require('http');
-
-	var ipAddressWebsite = {
-		host: 'ipv4bot.whatismyipaddress.com',
-		port: 80,
-		path: '/'
-	};
-
-	http.get(ipAddressWebsite, function (res) {
-		res.on("data", function (currentIP) {
-			dns.lookup('mc.qrl.nz', function (err, DomainIP, family) {
-				if (currentIP == DomainIP) {
-					IPResultMessage = "IP is " + currentIP + ", which matches the domain mc.qrl.nz";
-					msg.channel.send(IPResultMessage);
-				} else { // IP is not correct
-					IPResultMessage = "IP is " + currentIP + " but the domain mc.qrl.nz points to " + DomainIP + ". Attempting DNS auto-correction";
-					msg.channel.send(IPResultMessage);
-					ddns.update(cloudflareAuth, function (err) {
-						if (err) {
-							console.log("An error occurred:");
-							msg.channel.send("DNS was not able to be auto-corrected | <@310135293254696970>");
-							console.log(err);
-							console.log(cloudflareAuth);
-						} else {
-							console.log("Success!");
-							msg.channel.send("DNS has been auto-corrected, the update should take effect in ~5-30mins")
-						}
-					});
-
-				}
-			});
-
-		});
-	}).on('error', function (err) {
-		console.log("An error occurred:");
-		msg.channel.send("IP of server was not able to be found | <@310135293254696970>")
-		console.log(err);
-	});
-}
 
 function SliceMessage(Text) {
 	return chunk(Text, 2000);
@@ -139,7 +93,7 @@ bot.on('message', async msg => {
 
 	msgCommand = msg.content.toLowerCase();
 
-	if (msg.channel.name == 'the-sacered-texts') {
+	if (msg.channel.name == 'the-sacred-texts') {
 
 
 
@@ -176,7 +130,15 @@ bot.on('message', async msg => {
 
 		do {
 			fetched = await msg.channel.fetchMessages({ limit: 100 });
-			await msg.channel.bulkDelete(fetched);
+			await msg.channel.bulkDelete(fetched).catch(()=>{
+				fetched.forEach((message) => {
+					try {
+						message.delete();
+					} catch {
+						
+					}
+				});
+			});
 			console.log("Delete go brrrr", fetched.size)
 		}
 		while (fetched.size >= 2);
